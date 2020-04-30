@@ -1,6 +1,6 @@
 const globvar = {
   clientid: 0,
-  seceretkey: "kashMac-agro"
+  seceretkey: "defineyourkey",
 };
 
 module.exports = globvar;

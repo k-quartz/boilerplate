@@ -15,14 +15,8 @@ router.get("/", (req, res) => {
 
 //Get home page
 router.get("/home", userAuthenticate.method(), (req, res) => {
-  //console.log("global variable=" + globvar.clientid);
-  res.render("home");
-});
-
-//Get Profile page
-router.get("/profile", userAuthenticate.method(), (req, res) => {
-  // console.log(globvar.clientid);
-  res.render("home");
+  console.log("global variable=" + globvar.clientid);
+  res.send("home");
 });
 
 //Get Login page
@@ -34,7 +28,7 @@ router.post(
   "/login",
   passport.authenticate("local", {
     successRedirect: "/home",
-    failureRedirect: "/login"
+    failureRedirect: "/login",
   })
 );
 
@@ -42,13 +36,13 @@ router.post(
   "/login/api",
   passport.authenticate("local", {
     successRedirect: "/jwttken/1",
-    failureRedirect: "/jwttken/0"
+    failureRedirect: "/jwttken/0",
   })
 );
 
 router.get("/jwttken/:id", (req, res) => {
   if (req.params.id == 0) {
-    res.status(400).send({ error: "Unsucessfull Login", data: undefined });
+    res.status(200).send({ error: "Unsucessfull Login", clientid: 0 });
   } else {
     const id = globvar.clientid;
     const seckey = globvar.seceretkey;
@@ -95,7 +89,7 @@ router.post("/register", (req, res, next) => {
 
             const user_id = results[0];
             //this user_id will be passed to the serializeUser function
-            req.login(user_id, err => {
+            req.login(user_id, (err) => {
               res.redirect("/");
             });
           }

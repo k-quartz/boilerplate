@@ -12,8 +12,6 @@ passport.use(
   //function done will return a false if username and password are incorrect
   //if function done result true or a string user will be redirected to profile page
   new LocalStrategy((username, password, done) => {
-    console.log(username);
-    console.log(password);
     const db = require("../../db.js");
     db.query(
       "select clientid,password from client where clientname =?",
@@ -59,12 +57,11 @@ const UserAuthenticate = function authenticationMiddleware() {
     console.log(
       `req.session.passport.user: ${JSON.stringify(req.session.passport)}`
     );
-
     if (req.isAuthenticated()) return next();
     res.redirect("/login");
   };
 };
 
 module.exports = {
-  method: UserAuthenticate
+  method: UserAuthenticate,
 };
